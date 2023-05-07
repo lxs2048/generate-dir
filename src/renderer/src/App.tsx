@@ -1,150 +1,55 @@
-import Versions from './components/Versions'
-import icons from './assets/icons.svg'
 import { useState } from 'react'
-
+const default_tree = '# 请选择并生成项目目录'
 function App(): JSX.Element {
   const [dir,setDir] = useState('')
+  const [dirTree,setDirTree] = useState(default_tree)
   const openFile = async ()=>{
     const filePath = await window.electronAPI.openFile()
     setDir(filePath)
   }
+  const generateDir = async ()=>{
+    if(!dir) return
+    const DirTree = await window.electronAPI.getFilesName(dir)
+    setDirTree(DirTree)
+  }
+  const reset = ()=>{
+    setDir('')
+    setDirTree(default_tree)
+  }
+  const copyText = ()=>{
+    window.electronAPI.copyText(dirTree)
+  }
   return (
     <div className="container">
-      <Versions></Versions>
-      <div>当前目录：{dir}</div>
-      <button onClick={openFile}>选择文件夹</button>
-      <svg className="hero-logo" viewBox="0 0 900 300">
-        <use xlinkHref={`${icons}#electron`} />
-      </svg>
-      <h2 className="hero-text">
-        You{"'"}ve successfully created an Electron project with React and TypeScript
-      </h2>
-      <p className="hero-tagline">
-        Please try pressing <code>F12</code> to open the devTool
-      </p>
-
-      <div className="links">
-        <div className="link-item">
-          <a target="_blank" href="https://evite.netlify.app" rel="noopener noreferrer">
-            Documentation
-          </a>
-        </div>
-        <div className="link-item link-dot">•</div>
-        <div className="link-item">
-          <a
-            target="_blank"
-            href="https://github.com/alex8088/electron-vite"
-            rel="noopener noreferrer"
-          >
-            Getting Help
-          </a>
-        </div>
-        <div className="link-item link-dot">•</div>
-        <div className="link-item">
-          <a
-            target="_blank"
-            href="https://github.com/alex8088/quick-start/tree/master/packages/create-electron"
-            rel="noopener noreferrer"
-          >
-            create-electron
-          </a>
-        </div>
+      <p className="hero-tagline">目标目录：<code>{dir || '-'}</code></p>
+      <div className='features'>
+        <div className="btn btn-primary" onClick={openFile}>选择文件夹</div>
+        <div className='btn btn-default' onClick={generateDir}>生成工程目录</div>
+        <div className='btn btn-success btn-sm' onClick={copyText}>复制</div>
+        <div className='btn btn-warning btn-sm' onClick={reset}>重置</div>
       </div>
-
+      <div style={{margin:"14px 0px"}}>
+        <p className="hero-tagline">生成工程目录步骤如下：</p>
+        <ul>
+          <li><code>① 选择文件夹选定目标目录</code></li>
+          <li><code>② 手动生成工程目录</code></li>
+          <li><code>③ 复制生成的目录</code></li>
+        </ul>
+        <p>❗️ 可以使用重置按钮清空选择目录和生成的目录树，目前自动排除<code>node_modules</code>，<code>.git</code>目录</p>
+      </div>
       <div className="features">
         <div className="feature-item">
           <article>
-            <h2 className="title">Configuring</h2>
-            <p className="detail">
-              Config with <span>electron.vite.config.ts</span> and refer to the{' '}
-              <a target="_blank" href="https://evite.netlify.app/config/" rel="noopener noreferrer">
-                config guide
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">HMR</h2>
-            <p className="detail">
-              Edit <span>src/renderer</span> files to test HMR. See{' '}
-              <a
-                target="_blank"
-                href="https://evite.netlify.app/guide/hmr-in-renderer.html"
-                rel="noopener noreferrer"
-              >
-                docs
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Hot Reloading</h2>
-            <p className="detail">
-              Run{' '}
-              <span>
-                {"'"}electron-vite dev --watch{"'"}
-              </span>{' '}
-              to enable. See{' '}
-              <a
-                target="_blank"
-                href="https://evite.netlify.app/guide/hot-reloading.html"
-                rel="noopener noreferrer"
-              >
-                docs
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Debugging</h2>
-            <p className="detail">
-              Check out <span>.vscode/launch.json</span>. See{' '}
-              <a
-                target="_blank"
-                href="https://evite.netlify.app/guide/debugging.html"
-                rel="noopener noreferrer"
-              >
-                docs
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Source Code Protection</h2>
-            <p className="detail">
-              Supported via built-in plugin <span>bytecodePlugin</span>. See{' '}
-              <a
-                target="_blank"
-                href="https://evite.netlify.app/guide/source-code-protection.html"
-                rel="noopener noreferrer"
-              >
-                docs
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Packaging</h2>
-            <p className="detail">
-              Use{' '}
-              <a target="_blank" href="https://www.electron.build" rel="noopener noreferrer">
-                electron-builder
-              </a>{' '}
-              and pre-configured to pack your app.
-            </p>
+            <pre>
+              {dirTree}
+            </pre>
           </article>
         </div>
       </div>
+      <br />
+      <p className="hero-tagline center">
+        📮 <span>doit2048@163.com</span>
+      </p>
     </div>
   )
 }

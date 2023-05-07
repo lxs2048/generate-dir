@@ -25,18 +25,6 @@ code {
   font-size: 85%;
 }
 
-a {
-  color: #9feaf9;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  outline: none;
-}
-
-a:hover {
-  border-bottom: 1px solid;
-}
-
 .container {
   flex: 1;
   display: flex;
@@ -75,16 +63,6 @@ a:hover {
   transition: all 0.3s;
 }
 
-@media (max-width: 840px) {
-  .versions {
-    display: none;
-  }
-
-  .hero-logo {
-    margin-top: -1.5rem;
-  }
-}
-
 .hero-text {
   font-weight: 400;
   color: #c2f5ff;
@@ -93,48 +71,25 @@ a:hover {
   margin-bottom: 10px;
 }
 
-@media (max-width: 660px) {
-  .hero-logo {
-    display: none;
-  }
-
-  .hero-text {
-    margin-top: 20px;
-  }
-}
-
 .hero-tagline {
-  text-align: center;
   margin-bottom: 14px;
 }
 
-.links {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 24px;
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.links a {
-  font-weight: 500;
-}
-
-.links .link-item {
-  padding: 0 4px;
+.center {
+  text-align: center;
 }
 
 .features {
   display: flex;
   flex-wrap: wrap;
-  margin: -6px;
+  gap: 10px;
+  align-items: end;
 }
 
 .features .feature-item {
-  width: 33.33%;
+  flex: 1;
   box-sizing: border-box;
-  padding: 6px;
+  width: 100%;
 }
 
 .features article {
@@ -143,47 +98,216 @@ a:hover {
   box-sizing: border-box;
   padding: 12px;
   height: 100%;
+  overflow-x: auto;
 }
 
-.features span {
-  color: #d4e8ef;
-  word-break: break-all;
+.ml10 {
+  margin-left: 10px;
 }
 
-.features .title {
-  font-size: 17px;
-  font-weight: 500;
-  color: #c2f5ff;
-  line-height: 22px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.ml5 {
+  margin-left: 5px;
+}
+
+.ml8 {
+  margin-left: 8px;
+}
+
+/*默认按钮*/
+.btn {
+  user-select: none;
+  padding: 0 10px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  display: inline-block;
+  height: 38px;
+  line-height: 38px;
   white-space: nowrap;
+  text-decoration: none;
 }
 
-.features .detail {
-  font-size: 14px;
-  font-weight: 500;
+.btn,
+.btn:active,
+.btn:focus {
+  outline: 0;
+}
+
+/*大型按钮*/
+.btn-lg {
+  height: 44px;
+  line-height: 44px;
+  padding: 0 25px;
+  font-size: 16px;
+}
+
+/*小型按钮*/
+.btn-sm {
+  height: 30px;
+  line-height: 30px;
+  font-size: 12px;
+}
+
+/*迷你按钮*/
+.btn-xs {
+  height: 22px;
   line-height: 22px;
-  margin-top: 6px;
+  padding: 0 5px;
+  font-size: 12px;
 }
 
-@media (max-width: 660px) {
-  .features .feature-item {
-    width: 50%;
-  }
+/*禁用按钮*/
+.btn-disabled,
+.btn-disabled:hover,
+.btn-disabled:active {
+  border-color: #e6e6e6;
+  background-color: #eee;
+  background-image: none;
+  cursor: not-allowed;
+  color: #999;
 }
 
-@media (max-width: 480px) {
-  .links {
-    flex-direction: column;
-    line-height: 32px;
-  }
+/*主要按钮*/
+.btn-primary {
+  color: #fff;
+  background-color: #409eff;
+  border-color: #409eff;
+}
 
-  .links .link-dot {
-    display: none;
-  }
+.btn-primary:hover,
+.btn-primary:focus {
+  cursor: pointer;
+  background: #66b1ff;
+  border-color: #66b1ff;
+  color: #fff;
+}
 
-  .features .feature-item {
-    width: 100%;
-  }
+.btn-primary:active,
+.btn-primary.active {
+  color: #fff;
+  background-color: #3a8ee6;
+  border-color: #3a8ee6;
+}
+
+/*默认按钮*/
+.btn-default {
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid #dcdfe6;
+  color: #606266;
+}
+
+.btn-default:hover,
+.btn-default:focus {
+  border-color: #c6e2ff;
+  color: #409eff;
+  background-color: #ecf5ff;
+}
+
+.btn-default:active {
+  border-color: #3a8ee6;
+  color: #3a8ee6;
+}
+
+/*成功按钮*/
+.btn-success {
+  background-color: #1FBB7D;
+  color: #fff;
+}
+
+.btn-success:hover,
+.btn-success:focus {
+  cursor: pointer;
+  background-color: #59cd9f;
+  border-color: #59cd9f;
+  color: #fff;
+}
+
+.btn-success:active {
+  background-color: #199463;
+  border-color: #1FBB7D;
+
+}
+
+/*警告按钮*/
+.btn-warning {
+  color: #e6a23c;
+  background-color: #fdf6ec;
+  border-color: #ffeba9;
+}
+
+.btn-warning:hover,
+.btn-warning:focus {
+  cursor: pointer;
+  background-color: #fdf6ec;
+  border-color: #faad14;
+}
+
+.btn-warning:active {
+  background-color: #fEE692;
+  border-color: #fEE692;
+}
+
+/*危险按钮*/
+.btn-danger {
+  cursor: pointer;
+  background-color: #f56c6c;
+  border-color: #f56c6c;
+  color: #fff;
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+  color: #fff;
+  background-color: #ff7875;
+  border-color: #ff7875;
+}
+
+.btn-danger:active {
+  background-color: #d9363e;
+  border-color: #d9363e;
+}
+
+/*导出和导入按钮*/
+.btn-export,
+.btn-import {
+  cursor: pointer;
+  border-color: #9095a1;
+  background-color: #fff;
+}
+
+.btn-export {
+  color: #f7674e;
+}
+
+.btn-import {
+  color: #395bcc;
+}
+
+.btn-export:hover,
+.btn-import:hover,
+.btn-export:focus,
+.btn-import:focus {
+  border-color: #677088;
+  background-color: #eeeeee;
+}
+
+.btn-dashed {
+  color: #515a6e;
+  background-color: #fff;
+  border-color: #dcdee2;
+  border-style: dashed
+}
+
+.btn-dashed:hover,
+.btn-dashed:focus {
+  color: #57a3f3;
+  background-color: #fff;
+  border-color: #57a3f3
+}
+
+
+.btn-dashed:active {
+  color: #2b85e4;
+  background-color: #fff;
+  border-color: #2b85e4
 }

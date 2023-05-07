@@ -1,17 +1,17 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { handleFileOpen } from './util'
-
+import { ListenerStart } from './handle'
+// todo 处理菜单与多余参数
 export const BrowserWindowsMap = new Map<number, BrowserWindow>()
 export let mainWindowId: number;
 
-function createMainWindow(): void {
+function createMainWindow(first?:boolean): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 500,
+    height: 600,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -31,12 +31,12 @@ function createMainWindow(): void {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
-  ipcMain.handle('dialog:openFile', handleFileOpen)
+  first && ListenerStart()
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
-    mainWindow.webContents.toggleDevTools() // 控制台
+    // mainWindow.webContents.toggleDevTools() // 控制台
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
@@ -56,7 +56,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  createMainWindow()
+  createMainWindow(true)
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
