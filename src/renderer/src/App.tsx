@@ -1,23 +1,26 @@
 import { useState } from 'react'
 const default_tree = '# 请选择并生成项目目录'
 function App(): JSX.Element {
-  const [dir,setDir] = useState('')
-  const [dirTree,setDirTree] = useState(default_tree)
-  const openFile = async ()=>{
+  const [dir, setDir] = useState('')
+  const [dirTree, setDirTree] = useState(default_tree)
+  const openFile = async () => {
     const filePath = await window.electronAPI.openFile()
     setDir(filePath)
   }
-  const generateDir = async ()=>{
-    if(!dir) return
+  const generateDir = async () => {
+    if (!dir) return
     const DirTree = await window.electronAPI.getFilesName(dir)
     setDirTree(DirTree)
   }
-  const reset = ()=>{
+  const reset = () => {
     setDir('')
     setDirTree(default_tree)
   }
-  const copyText = ()=>{
+  const copyText = () => {
     window.electronAPI.copyText(dirTree)
+    window.electronAPI.prompt({
+      title: '复制成功',
+    })
   }
   return (
     <div className="container">
@@ -28,7 +31,7 @@ function App(): JSX.Element {
         <div className='btn btn-success btn-sm' onClick={copyText}>复制</div>
         <div className='btn btn-warning btn-sm' onClick={reset}>重置</div>
       </div>
-      <div style={{margin:"14px 0px"}}>
+      <div style={{ margin: "14px 0px" }}>
         <p className="hero-tagline">生成工程目录步骤如下：</p>
         <ul>
           <li><code>① 选择文件夹选定目标目录</code></li>

@@ -1,4 +1,4 @@
-import { IpcMainInvokeEvent, dialog,clipboard } from 'electron'
+import { IpcMainInvokeEvent, dialog,clipboard,Notification } from 'electron'
 import { access, constants, readdir } from 'node:fs/promises';
 import { mainWindowId, BrowserWindowsMap } from './index'
 import path from 'node:path';
@@ -53,4 +53,15 @@ async function getFilesRecursive(dirPath, prefix = '') {
 // 复制
 export const copyText = async (_:IpcMainInvokeEvent,str:string)=> {
   clipboard.writeText(str, 'selection')
+}
+export interface INotification {
+  title?: string,
+  body?: string
+}
+// 消息通知
+export const prompt = async (_:IpcMainInvokeEvent,msg:INotification) =>{
+  const notification = new Notification({
+    ...msg
+  })
+  notification.show()
 }
