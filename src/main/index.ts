@@ -3,7 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { ListenerStart } from './handle'
-// todo 处理菜单与多余参数
+
 export const BrowserWindowsMap = new Map<number, BrowserWindow>()
 export let mainWindowId: number;
 
