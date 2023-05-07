@@ -1,11 +1,18 @@
 import Versions from './components/Versions'
 import icons from './assets/icons.svg'
+import { useState } from 'react'
 
 function App(): JSX.Element {
+  const [dir,setDir] = useState('')
+  const openFile = async ()=>{
+    const filePath = await window.electronAPI.openFile()
+    setDir(filePath)
+  }
   return (
     <div className="container">
       <Versions></Versions>
-
+      <div>当前目录：{dir}</div>
+      <button onClick={openFile}>选择文件夹</button>
       <svg className="hero-logo" viewBox="0 0 900 300">
         <use xlinkHref={`${icons}#electron`} />
       </svg>
