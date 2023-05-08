@@ -1,20 +1,20 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow,Menu } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
 import { ListenerStart } from './handle'
 
 export const BrowserWindowsMap = new Map<number, BrowserWindow>()
 export let mainWindowId: number;
-
+export const isMac = process.platform === 'darwin'
 function createMainWindow(first?:boolean): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 500,
     height: 600,
     show: false,
+    title: '',
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    icon: join(__dirname,'../../resources/icon.png'),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
@@ -46,6 +46,20 @@ function createMainWindow(first?:boolean): void {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  const template = [
+    ...(isMac ? [{
+      label: app.getName(),
+      submenu: [
+        {
+          label: '退出',
+          role: 'quit'
+        }
+      ]
+    }] : []),
+  ]
+  // @ts-ignore
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 

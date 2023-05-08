@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: generate-dir
+productName: 目录生成
 directories:
   buildResources: build
 files:
@@ -13,7 +13,7 @@ asarUnpack:
   - resources/**
 afterSign: build/notarize.js
 win:
-  executableName: generate-dir
+  executableName: 目录生成
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}

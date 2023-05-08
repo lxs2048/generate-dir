@@ -61,7 +61,8 @@ export interface INotification {
 // 消息通知
 export const prompt = async (_:IpcMainInvokeEvent,msg:INotification) =>{
   const notification = new Notification({
-    ...msg
+    ...msg,
+    title:'目录生成'
   })
   notification.show()
 }
